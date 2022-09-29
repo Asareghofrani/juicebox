@@ -3,11 +3,6 @@ const { Client } = require('pg'); // imports the pg module
 // supply the db name and location of the database
 const client = new Client('postgres://localhost:5432/juicebox-dev');
 
-// module.exports = {
-//   client,
-// }
-
-
 
 async function createUser({ 
   username,
@@ -295,6 +290,17 @@ async function addTagsToPost(postId, tagList) {
   }
 }
 
+async function getAllTags() {
+  try{ const { rows } = await client.query(
+     `SELECT *
+     FROM tags;
+   `);
+ 
+   return rows;
+ } catch(error){
+   throw error;
+ }
+ }
 
 
 // and export them
@@ -313,6 +319,7 @@ module.exports = {
   addTagsToPost,
   getPostById,
   getPostsByTagName,
+  getAllTags,
     }
 
 
